@@ -25,7 +25,7 @@ export default function Header() {
 
                     <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[4px] border-b-transparent ${pathMatchRoute("/sign-in") && "text-black border-b-purple-500"}`} onClick={()=>navigate("/sign-in")}>Sign In</li>
 
-                
+
                 </ul>
             </div>
         </header>
