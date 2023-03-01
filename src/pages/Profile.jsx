@@ -25,6 +25,7 @@ export default function Profile() {
       [e.target.id]:e.target.value
     }))
   }
+  
 async function onSubmit(){
 try {
   if(auth.currentUser.displayName !==name){
