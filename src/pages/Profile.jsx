@@ -79,6 +79,7 @@ try {
 
       }
     }
+    
     function onEdit(listingID){
       navigate(`/edit-listing/${listingID}`)
     }
