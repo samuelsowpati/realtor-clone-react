@@ -34,6 +34,7 @@ export default function Header() {
                     <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[4px]  ${pathMatchRoute("/") && "text-black border-b-purple-500" }`} onClick={()=>navigate("/")}>Home</li>
 
                     <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[4px]  ${pathMatchRoute("/offers") && "text-black border-b-purple-500" }`} onClick={()=>navigate("/offers")}>Offers</li>
+                    <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[4px]  ${pathMatchRoute("/search") && "text-black border-b-purple-500" }`} onClick={()=>navigate("/search")}>Search</li>
 
                     <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[4px]  ${(pathMatchRoute("/sign-in") || pathMatchRoute("/profile")) && "text-black border-b-purple-500" }`} onClick={()=>navigate("/profile")}>{pageState}</li>
 

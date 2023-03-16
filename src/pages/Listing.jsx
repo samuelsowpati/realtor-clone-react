@@ -71,7 +71,7 @@ import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
                     <div className='flex justify-start items-center space-x-4 w-[75%]'>
                         <p className='bg-red-800 w-full max-w-[200px] rounded-md p-1 text-white text-center font-semibold shadow-md'>{listing.type==='rent' ? 'Rent' : 'Sale'}</p>
                         {listing.offer && (
-                            <p className='w-full  max-w-[200px] bg-green-800 rounded-md p-1 text-white text-center font-semibold shadow-md'>Rs. {+listing.regularPrice - +listing.discountedPrice} Discount</p>
+                            <p className='w-full  max-w-[200px] bg-green-800 rounded-md p-1 text-white text-center font-semibold shadow-md'>Rs. {(+listing.regularPrice - +listing.discountedPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} Discount</p>   
                         )}
                     </div>
                     <p className='mt-3 mb-3'> 

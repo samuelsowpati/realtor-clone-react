@@ -101,8 +101,11 @@ export default function EditListing() {
             toast.error('Max 6 images allowed')
             return
         }
+
         let geolocation = {}
         let location 
+        let addressArray=address.replaceAll(",", " ").replaceAll(/\s{2,}/g,' ').toLowerCase().split(" ")
+
         if(geolocationEnabled){
             const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`)
             const data=await response.json()
@@ -169,7 +172,8 @@ export default function EditListing() {
                 imgUrls, 
                 geolocation,
                 timestamp:serverTimestamp(),
-                userRef: auth.currentUser.uid
+                userRef: auth.currentUser.uid,
+                addressArray
             }
             delete formDataCopy.images
             !formDataCopy.offer && delete formDataCopy.discountedPrice
