@@ -1,18 +1,24 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import React, { useEffect, useState } from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
-
+import {FaHeart, FaSearch} from 'react-icons/fa'
 export default function Header() {
     const [pageState, setPageState] = useState("Sign-In")
+    const [heart,setHeart]=useState(null)
     const location=useLocation()
     const navigate=useNavigate()
+    const[disabled, setDisabled] = useState(false)
     const auth=getAuth()
+    
+    
     useEffect(()=>{
         onAuthStateChanged(auth, (user)=>{
             if(user){
                 setPageState("Profile")
+                setHeart(true)
             } else{
                 setPageState("Sign-In")
+                setHeart(false)
             }
         })
     },[auth])
@@ -31,12 +37,14 @@ export default function Header() {
             </div>
             <div>
                 <ul className="flex space-x-9">
-                    <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[4px]  ${pathMatchRoute("/") && "text-black border-b-purple-500" }`} onClick={()=>navigate("/")}>Home</li>
+                    <li className={`cursor-pointer py-3 text-sm font-semibold text-black border-b-[4px]  ${pathMatchRoute("/") && " border-b-purple-500" }`} onClick={()=>navigate("/")}>Home</li>
 
-                    <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[4px]  ${pathMatchRoute("/offers") && "text-black border-b-purple-500" }`} onClick={()=>navigate("/offers")}>Offers</li>
-                    <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[4px]  ${pathMatchRoute("/search") && "text-black border-b-purple-500" }`} onClick={()=>navigate("/search")}>Search</li>
+                    <li className={`cursor-pointer py-3 text-sm font-semibold text-black border-b-[4px]  ${pathMatchRoute("/offers") && " border-b-purple-500" }`} onClick={()=>navigate("/offers")}>Offers</li>
+                    <li className={`cursor-pointer py-3 text-sm font-semibold text-black border-b-[4px]  ${pathMatchRoute("/search") && " border-b-purple-500" }`} onClick={()=>navigate("/search")}><FaSearch className='mt-1 text-black'/></li>
 
-                    <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[4px]  ${(pathMatchRoute("/sign-in") || pathMatchRoute("/profile")) && "text-black border-b-purple-500" }`} onClick={()=>navigate("/profile")}>{pageState}</li>
+                    <li className={`cursor-pointer py-3 text-sm font-semibold text-black border-b-[4px]  ${(pathMatchRoute("/sign-in") || pathMatchRoute("/profile")) && "text-black border-b-purple-500" }`} onClick={()=>navigate("/profile")}>{pageState}</li>
+                   {heart && (<li  className={`cursor-pointer py-3 text-sm font-semibold text-black border-b-[4px]  ${pathMatchRoute("/favourite")  &&"text-black border-b-purple-500" }`} onClick={()=>navigate("/favourite")}><FaHeart className='mt-1 text-red-600' /></li>
+                    )}
 
 
                 </ul>

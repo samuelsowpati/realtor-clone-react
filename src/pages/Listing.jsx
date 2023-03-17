@@ -1,4 +1,5 @@
-    import { doc, getDoc } from 'firebase/firestore'
+
+    import { doc, getDoc, updateDoc } from 'firebase/firestore'
     import React, { useEffect, useState } from 'react'
     import { useParams } from 'react-router-dom'
     import Spinner from '../components/Spinner'
@@ -6,15 +7,17 @@
     import {Swiper, SwiperSlide} from 'swiper/react'
     import SwiperCore, {EffectFade, Autoplay, Navigation, Pagination} from 'swiper'
     import 'swiper/css/bundle'
-    import {FaShare, FaMapMarkerAlt, FaBed, FaBath, FaParking, FaChair} from 'react-icons/fa'
+    import {FaShare, FaMapMarkerAlt, FaBed, FaBath, FaParking, FaChair, FaHeart} from 'react-icons/fa'
     import {getAuth} from 'firebase/auth'
-import Contact from '../components/Contact'
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+    import Contact from '../components/Contact'
+    import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 
     export default function Listing() {
-        const auth = getAuth()
+        const auth=getAuth()
+        let[count,setCount] = useState(0)
         const params = useParams()
         const[listing,setListing] = useState(null)
+        const[like,setLike] = useState(false)
         const[loading,setLoading] = useState(true)
         const[shareLinkCopied, setShareLinkCopied] = useState(false)
         const[contactOwner, setContactOwner] = useState(false)
@@ -25,16 +28,58 @@ import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
                 const docSnap = await getDoc (docRef)
                 if(docSnap.exists()){
                     setListing(docSnap.data())
+                    if(count===0){
+                        //execute only on first load
+                        try {
+                        listing.favourite.includes(auth.currentUser.uid) ? setLike(true):setLike(false)
+                        setCount(1)
+                        } catch (error) {}
+                        
+                    }
+                    
                     setLoading(false)
                 }
             }
             fetchListing()
 
-        },[params.listingId])
+        },[params.listingId, listing])
+
+        async function addFavourite(){
+            const uid=auth.currentUser.uid
+            
+            const docRef = doc(db ,'listings',params.listingId)
+            const docSnap = await getDoc(docRef)
+            let formDataCopy=docSnap.data()
+
+            let favourite = formDataCopy.favourite
+            
+            //if: id not present then add else: delete the id
+            if(!favourite.includes(uid))
+            {
+                setLike(true)
+                favourite.push(uid)
+                
+            } else{
+                setLike(false)
+                for( var i = 0; i < favourite.length; i++){
+                    if ( favourite[i] === auth.currentUser.uid) {
+                        favourite.splice(i, 1); 
+                    }
+                }
+            }
+
+            delete formDataCopy.favourite
+            formDataCopy={
+                ...formDataCopy,
+                favourite
+            }
+            console.log(formDataCopy)
+            await updateDoc(docRef, formDataCopy)
+            setLoading(false)
+        }
         if(loading){
             return <Spinner/>
         }
-
     return (
         <main>
             <Swiper slidesPerView={1} navigation pagination={{type:'progressbar'}} effect='fade' modules = {[EffectFade]} autoplay={{delay:3000}}>
@@ -68,11 +113,14 @@ import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
                         {listing.name} - Rs. {listing.offer ? listing.discountedPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : listing.regularPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{listing.type==='rent' ?' /month' : ''}
                     </p>
                     <p className='flex items-center mt-6 mb-3 font-semibold'><FaMapMarkerAlt className='text-green-700 mr-1'/>{listing.address}</p>
-                    <div className='flex justify-start items-center space-x-4 w-[75%]'>
+                    <div className='flex justify-start items-center space-x-4 w-[100%]'>
                         <p className='bg-red-800 w-full max-w-[200px] rounded-md p-1 text-white text-center font-semibold shadow-md'>{listing.type==='rent' ? 'Rent' : 'Sale'}</p>
                         {listing.offer && (
                             <p className='w-full  max-w-[200px] bg-green-800 rounded-md p-1 text-white text-center font-semibold shadow-md'>Rs. {(+listing.regularPrice - +listing.discountedPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} Discount</p>   
                         )}
+
+                        <button className={`cursor-pointer ${like ? 'text-red-600':'text-slate-400'}`}  onClick={addFavourite}><FaHeart/></button>  
+
                     </div>
                     <p className='mt-3 mb-3'> 
                         <span className='font-semibold'>Description - </span>

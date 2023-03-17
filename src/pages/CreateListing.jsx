@@ -73,6 +73,7 @@ export default function CreateListing() {
 
         let geolocation = {}
         let location 
+        let favourite=[]
         let addressArray=address.replaceAll(",", " ").replaceAll(/\s{2,}/g,' ').toLowerCase().split(" ")
 
         if(geolocationEnabled){
@@ -144,7 +145,8 @@ export default function CreateListing() {
                 geolocation,
                 timestamp:serverTimestamp(),
                 userRef: auth.currentUser.uid,
-                addressArray
+                addressArray,
+                favourite
             }
             delete formDataCopy.images
             !formDataCopy.offer && delete formDataCopy.discountedPrice
