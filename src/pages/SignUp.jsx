@@ -40,14 +40,17 @@ export default function SignUp() {
       const formDataCopy={...formData}
       delete formData.password
       formDataCopy.timestamp=serverTimestamp()
+      formDataCopy.uid = auth.currentUser.uid
 
       //now uploading data to fire db
       await setDoc(doc(db, "users", user.uid), formDataCopy)
+      await setDoc(doc(db, "userChats", user.uid), {})
       toast.success("Sign Up Successful!")
       //go to home after cred upload to db on click
       navigate("/")
 
     } catch (error) {
+      console.log(error)
       toast.error("Something went wrong!")
     }
   }

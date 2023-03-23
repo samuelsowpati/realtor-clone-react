@@ -15,8 +15,10 @@ import Listing from "./pages/Listing";
 import Category from "./pages/Category";
 import Search from "./pages/Search";
 import Favourite from "./pages/Favourite";
+import ChatHome from "./pages/ChatHome";
 
 function App() {
+
   return (
     <>
     <Router>
@@ -28,6 +30,7 @@ function App() {
         </Route>
         <Route path="/sign-in" element={ <SignIn /> }/> 
         <Route path="/sign-up" element={ <SignUp /> }/> 
+        <Route path="/chat-home" element={ <ChatHome /> }/> 
         <Route path="/forgot-password" element={ <ForgotPassword /> }/> 
         <Route path="/category/:categoryName/:listingId" element={ <Listing /> }/> 
         <Route path="/offers" element={ <Offers /> }/> 

@@ -17,13 +17,21 @@ export default function OAuth() {
       //check if existing G acc
       const docRef=doc(db,"users",user.uid)
       const docSnap = await getDoc(docRef)
+
+      const docRef2=doc(db,"userChats",user.uid)
+      const docSnap2 = await getDoc(docRef)
       //if avail or not?
       if(!docSnap.exists()){
         await setDoc(docRef,{
           name: user.displayName,
           email: user.email,
           timestamp:serverTimestamp(),
+          uid:user.uid
         })
+        }
+      //adding userchats for auth await setDoc(doc(db, "userChats", user.uid), {})
+      if(!docSnap2.exists()){
+        await setDoc(docRef2,{ })
       }
       toast.success("Google Auth successful!")
       navigate("/")

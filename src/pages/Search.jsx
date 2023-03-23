@@ -106,7 +106,7 @@ export default function Search() {
       <h1 className='text-3xl text-center mt-6 font-bold mb-6'>Search For Properties</h1>
       <form onSubmit={onSubmit} >
         <div className='flex'>
-            <input type="text" id ='searchId' placeholder='Eg: Chennai' onChange={onChange} required className='w-full text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600'/>
+            <input type="text" id ='searchId' placeholder='Eg: Chennai' value={searchId} onChange={onChange} required className='w-full text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600'/>
             <button className='ml-2 bg-blue-600 text-white font-medium text-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'>Search</button>
         </div>
       </form>

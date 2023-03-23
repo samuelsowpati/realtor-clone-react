@@ -2,9 +2,11 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import React, { useEffect, useState } from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
 import {FaHeart, FaSearch} from 'react-icons/fa'
+import {BsChatFill}from'react-icons/bs'
 export default function Header() {
     const [pageState, setPageState] = useState("Sign-In")
     const [heart,setHeart]=useState(null)
+    const [chat,setChat]=useState(null)
     const location=useLocation()
     const navigate=useNavigate()
     const[disabled, setDisabled] = useState(false)
@@ -16,9 +18,11 @@ export default function Header() {
             if(user){
                 setPageState("Profile")
                 setHeart(true)
+                setChat(true)
             } else{
                 setPageState("Sign-In")
                 setHeart(false)
+                setChat(false)
             }
         })
     },[auth])
@@ -44,6 +48,8 @@ export default function Header() {
 
                     <li className={`cursor-pointer py-3 text-sm font-semibold text-black border-b-[4px]  ${(pathMatchRoute("/sign-in") || pathMatchRoute("/profile")) && "text-black border-b-purple-500" }`} onClick={()=>navigate("/profile")}>{pageState}</li>
                    {heart && (<li  className={`cursor-pointer py-3 text-sm font-semibold text-black border-b-[4px]  ${pathMatchRoute("/favourite")  &&"text-black border-b-purple-500" }`} onClick={()=>navigate("/favourite")}><FaHeart className='mt-1 text-red-600' /></li>
+                    )}
+                   {chat && (<li  className={`cursor-pointer py-3 text-sm font-semibold text-black border-b-[4px]  ${pathMatchRoute("/chat-home")  &&"text-black border-b-purple-500" }`} onClick={()=>navigate("/chat-home")}><BsChatFill className='mt-1 text-blue-500' /></li>
                     )}
 
 
