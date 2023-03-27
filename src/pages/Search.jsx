@@ -104,7 +104,7 @@ export default function Search() {
         </div>
 
       
-        <div className='mt-2 flex'>
+        <div className='mt-2 flex justify-center'>
 
 
                 <button type='button' id='type' value='sale' onClick={()=>setType('sale')} className={`mr-3 px-7 py-3 font-medium text-sm shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out ${
@@ -119,14 +119,14 @@ export default function Search() {
                     Rent
                 </button>
 
-                <div className='flex mr-3'>
+                <div className='flex mr-3 items-center'>
                   <p className='font-medium text-sm mr-1'>Beds</p>
-                  <input type="number" id='beds' value={beds} onChange={(e)=>setBeds(e.target.value)}  max='50' required className=' px-4 py-2 text-xl text-gray-700 bg-white border border-gray-3 00 rounded transition duration-150 ease-in-out focus:text-gray focus:bg-white focus:border-slate-600 text-center'/>
+                  <input type="number" id='beds' value={beds} onChange={(e)=>setBeds(e.target.value)}  max='50' required className=' px-7 py-3 font-medium text-sm w-24 text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray focus:bg-white focus:border-slate-600 text-center'/>
                 </div>
 
-                <div className='flex mr-3'>
+                <div className='flex mr-3 items-center'>
                   <p className='font-medium text-sm mr-1'>Baths</p>
-                  <input type="number" id='baths' value={baths} onChange={(e)=>setBaths(e.target.value)}  max='50' required className=' px-4 py-2 text-xl text-gray-700 bg-white border border-gray-3 00 rounded transition duration-150 ease-in-out focus:text-gray focus:bg-white focus:border-slate-600 text-center'/>
+                  <input type="number" id='baths' value={baths} onChange={(e)=>setBaths(e.target.value)}  max='50' required className=' px-7 py-3 font-medium text-sm w-24 text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray focus:bg-white focus:border-slate-600 text-center'/>
                 </div>
 
                 <div>
