@@ -1,7 +1,3 @@
-
-    // Firestore rules
-
-
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -10,7 +6,6 @@ service cloud.firestore {
     	allow read;
       allow create: if request.auth != null && request.resource.data.imgUrls.size() < 7;
     	allow delete: if resource.data.userRef == request.auth.uid;
-      //changing update, because when we favourite the listing updateds favourite uid list :)
       allow update;
     }
    
@@ -20,22 +15,19 @@ service cloud.firestore {
     	allow create;
     	allow update: if request.auth.uid == user
     }
-  }
-}
-
-
-    // Storage rules
-
-
-rules_version = '2';
-service firebase.storage {
-  match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read;
-      allow write: if
-      request.auth != null &&
-      request.resource.size < 10 * 1024 * 1024 && //2MB
-      request.resource.contentType.matches('image/.*')
+    
+    // userChats
+    match /userChats/{userChat} {
+    	allow read;
+    	allow create;
+    	allow update;
+    }
+    
+    // Chats
+    match /chats/{chat} {
+    	allow read;
+    	allow create;
+    	allow update;
     }
   }
 }

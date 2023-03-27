@@ -16,6 +16,7 @@ import Category from "./pages/Category";
 import Search from "./pages/Search";
 import Favourite from "./pages/Favourite";
 import ChatHome from "./pages/ChatHome";
+import Image from "./pages/Image";
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/profile" element={ <Profile /> }/> 
         </Route>
         <Route path="/sign-in" element={ <SignIn /> }/> 
+        <Route path="/image" element={ <Image /> }/> 
         <Route path="/sign-up" element={ <SignUp /> }/> 
         <Route path="/chat-home" element={ <ChatHome /> }/> 
         <Route path="/forgot-password" element={ <ForgotPassword /> }/> 
@@ -57,7 +59,7 @@ function App() {
         pauseOnHover
         theme="light"
         />  
-    </>
+        </>
   );
 }
 

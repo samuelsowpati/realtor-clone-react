@@ -3,20 +3,36 @@ import React, { useEffect, useState } from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
 import {FaHeart, FaSearch} from 'react-icons/fa'
 import {BsChatFill}from'react-icons/bs'
+import { ethers } from 'ethers'
 export default function Header() {
     const [pageState, setPageState] = useState("Sign-In")
     const [heart,setHeart]=useState(null)
+    const [logged,setLogged]=useState(null)
     const [chat,setChat]=useState(null)
     const location=useLocation()
     const navigate=useNavigate()
     const[disabled, setDisabled] = useState(false)
     const auth=getAuth()
-    
-    
+
+    const [account,setAccount]=useState(null)
+    const connectHandler=async()=>{
+        const accounts = await window.ethereum.request({method:'eth_requestAccounts'})
+        setAccount(accounts[0])
+    }
+
+    useEffect(()=>{
+        async function loadBlockchainData(){
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+        }
+        loadBlockchainData()
+    },[])
+
+
     useEffect(()=>{
         onAuthStateChanged(auth, (user)=>{
             if(user){
                 setPageState("Profile")
+                setLogged(true)
                 setHeart(true)
                 setChat(true)
             } else{
@@ -50,6 +66,9 @@ export default function Header() {
                    {heart && (<li  className={`cursor-pointer py-3 text-sm font-semibold text-black border-b-[4px]  ${pathMatchRoute("/favourite")  &&"text-black border-b-purple-500" }`} onClick={()=>navigate("/favourite")}><FaHeart className='mt-1 text-red-600' /></li>
                     )}
                    {chat && (<li  className={`cursor-pointer py-3 text-sm font-semibold text-black border-b-[4px]  ${pathMatchRoute("/chat-home")  &&"text-black border-b-purple-500" }`} onClick={()=>navigate("/chat-home")}><BsChatFill className='mt-1 text-blue-500' /></li>
+                    )}
+                    {account ? (<li><button type="button" className='w-[100px] h-[40px] mt-1 text-white bg-blue-600 border-none rounded-lg font-semibold cursor-pointer transition duration-150 ease-in-out'>{account.slice(0,6)+'...'+account.slice(38,42)}</button></li>
+                    ): (<li><button type="button" onClick = {connectHandler}className='w-[100px] h-[40px] mt-1 text-white bg-blue-600 border-none rounded-lg font-semibold cursor-pointer transition duration-150 ease-in-out'> Connect </button></li>
                     )}
 
 
