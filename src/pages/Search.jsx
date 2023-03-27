@@ -8,6 +8,11 @@ import { db } from '../firebase'
 export default function Search() {
   const[listings,setListings]=useState(null)
   const[searchId,setSearchId] = useState('')
+  const[beds,setBeds]=useState(0)
+  const[type,setType]=useState('rent')
+  const[baths,setBaths]=useState(0)
+  const[furnished,setFurnished]=useState(false)
+  const[parking,setParking]=useState(false)
   const[loading,setLoading]=useState(false)
   const[lastFetchedListing, setLastFetchedListing] = useState(null)
 /*   useEffect(()=>{
@@ -58,11 +63,15 @@ export default function Search() {
   async function onSubmit(e){
     e.preventDefault()
     setLoading(true)
-    console.log(searchId)
 
     try {
         const listingRef = collection(db,'listings')
-        const q = query(listingRef, where('addressArray','array-contains',searchId),orderBy('timestamp','desc'))
+        console.log(type)
+        console.log(beds)
+        console.log(baths)
+        console.log(parking)
+        console.log(furnished)
+        const q = query(listingRef, where('addressArray','array-contains',searchId),where('bathrooms','==',baths),where('bedrooms','==',beds),where('parking','==',parking),where('furnished','==',furnished),where('type','==',type),orderBy('timestamp','desc'))
         const querySnap = await getDocs(q)
         const lastVisible = querySnap.docs[querySnap.docs.length-1]
         setLastFetchedListing(lastVisible)
@@ -81,22 +90,6 @@ export default function Search() {
 
   }
 
-  function onChange(e){
-        let boolean = null
-        if(e.target.value==='true'){
-        boolean=true
-        }
-        if(e.target.value==='false'){
-        boolean=false 
-        }
-        //Text or Boolean or Number
-        if(!e.target.files){
-            //if value exists then bool is true, then id=value. Eg: type=rent
-            [e.target.id]= boolean ?? e.target.value
-            setSearchId(e.target.value.toLowerCase())
-        }
-    }
-
     if(loading){
         return <Spinner/>
     }
@@ -106,9 +99,56 @@ export default function Search() {
       <h1 className='text-3xl text-center mt-6 font-bold mb-6'>Search For Properties</h1>
       <form onSubmit={onSubmit} >
         <div className='flex'>
-            <input type="text" id ='searchId' placeholder='Eg: Chennai' value={searchId} onChange={onChange} required className='w-full text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600'/>
+            <input type="text" id ='searchId' placeholder='Eg: Chennai' value={searchId} onChange={(e)=>setSearchId(e.target.value.toLowerCase())} required className='w-full text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600'/>
             <button className='ml-2 bg-blue-600 text-white font-medium text-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'>Search</button>
         </div>
+
+      
+        <div className='mt-2 flex'>
+
+
+                <button type='button' id='type' value='sale' onClick={()=>setType('sale')} className={`mr-3 px-7 py-3 font-medium text-sm shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out ${
+                    type==='rent' ? 'bg-white text-black':'bg-slate-600 text-white'
+                }`}>
+                    Sale
+                </button>
+
+                <button type='button' id='type' value='rent' onClick={()=>setType('rent')} className={`mr-3 px-7 py-3 font-medium text-sm shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out ${
+                    type==='sale' ? 'bg-white text-black':'bg-slate-600 text-white'
+                }`}>
+                    Rent
+                </button>
+
+                <div className='flex mr-3'>
+                  <p className='font-medium text-sm mr-1'>Beds</p>
+                  <input type="number" id='beds' value={beds} onChange={(e)=>setBeds(e.target.value)}  max='50' required className=' px-4 py-2 text-xl text-gray-700 bg-white border border-gray-3 00 rounded transition duration-150 ease-in-out focus:text-gray focus:bg-white focus:border-slate-600 text-center'/>
+                </div>
+
+                <div className='flex mr-3'>
+                  <p className='font-medium text-sm mr-1'>Baths</p>
+                  <input type="number" id='baths' value={baths} onChange={(e)=>setBaths(e.target.value)}  max='50' required className=' px-4 py-2 text-xl text-gray-700 bg-white border border-gray-3 00 rounded transition duration-150 ease-in-out focus:text-gray focus:bg-white focus:border-slate-600 text-center'/>
+                </div>
+
+                <div>
+                  <button type='button' id='parking' value={parking} onClick={()=>setParking(!parking)} className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out ${
+                      !parking ? 'bg-white text-black':'bg-slate-600 text-white'
+                  }`}>
+                      Parking
+                  </button>
+                </div>
+
+                <div>
+                  <button type='button' id='furnished' value={furnished} onClick={()=>setFurnished(!furnished)} className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out ${
+                      !furnished ? 'bg-white text-black':'bg-slate-600 text-white'
+                  }`}>
+                      Furnished
+                  </button>
+                </div>
+                
+
+        </div>
+
+
       </form>
 
       {loading ? (<Spinner/>) : listings && listings.length>0 ? (
