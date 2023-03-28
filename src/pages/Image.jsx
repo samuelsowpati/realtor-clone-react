@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import * as PANOLENS from "panolens"
 export default function Image() {
 
-    const panorama = new PANOLENS.ImagePanorama("/assets/cyber.png");
+    const panorama = new PANOLENS.ImagePanorama("/assets/h1.jpeg");
     const viewer = new PANOLENS.Viewer({
       container: document.querySelector(".image-container"),
       autoRotate:true,

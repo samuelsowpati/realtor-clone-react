@@ -1,18 +1,21 @@
 
     import { doc, getDoc, updateDoc } from 'firebase/firestore'
     import React, { useEffect, useState } from 'react'
-    import { useParams } from 'react-router-dom'
+    import { useNavigate, useParams } from 'react-router-dom'
     import Spinner from '../components/Spinner'
     import { db } from '../firebase'
     import {Swiper, SwiperSlide} from 'swiper/react'
     import SwiperCore, {EffectFade, Autoplay, Navigation, Pagination} from 'swiper'
     import 'swiper/css/bundle'
     import {FaShare, FaMapMarkerAlt, FaBed, FaBath, FaParking, FaChair, FaHeart} from 'react-icons/fa'
+    import {Md360} from 'react-icons/md'
+    import{TbView360}from'react-icons/tb'
     import {getAuth} from 'firebase/auth'
     import Contact from '../components/Contact'
     import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 
     export default function Listing() {
+        const navigate = useNavigate()
         const auth=getAuth()
         let[count,setCount] = useState(0)
         const params = useParams()
@@ -119,7 +122,12 @@
                             <p className='w-full  max-w-[200px] bg-green-800 rounded-md p-1 text-white text-center font-semibold shadow-md'>Rs. {(+listing.regularPrice - +listing.discountedPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} Discount</p>   
                         )}
 
+
+
                         <button className={`cursor-pointer ${like ? 'text-red-600':'text-slate-400'}`}  onClick={addFavourite}><FaHeart/></button>  
+                        
+                        <button onClick={()=>navigate("/image")}><Md360/></button>
+
 
                     </div>
                     <p className='mt-3 mb-3'> 
