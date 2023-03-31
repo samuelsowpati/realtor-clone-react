@@ -1,16 +1,18 @@
 
 import { collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from 'firebase/firestore'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { db } from '../firebase'
 
-export default function SearchChat() {
-  const [username,setUsername] = useState('')
+export default function SearchChat({listing_uid}) {
+
+  //Get listing id username from listing page
+  const [username,setUsername] = useState(listing_uid)
   const [user,setUser] = useState(null)
   const [error,setError]=useState(false)
   const { currentuser } = useContext(AuthContext);
 
-  
+ 
   const handleSearch=async ()=>{
     const userRef = collection(db,'users')
     const q=query(userRef,where('name','==',username))

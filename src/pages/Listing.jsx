@@ -1,5 +1,5 @@
 
-    import { doc, getDoc, updateDoc } from 'firebase/firestore'
+    import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore'
     import React, { useEffect, useState } from 'react'
     import { useNavigate, useParams } from 'react-router-dom'
     import Spinner from '../components/Spinner'
@@ -13,8 +13,11 @@
     import {getAuth} from 'firebase/auth'
     import Contact from '../components/Contact'
     import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+    import { BsChatFill } from 'react-icons/bs'
 
     export default function Listing() {
+        let listing_uid
+        let listing_uname
         const navigate = useNavigate()
         const auth=getAuth()
         let[count,setCount] = useState(0)
@@ -80,6 +83,20 @@
             await updateDoc(docRef, formDataCopy)
             setLoading(false)
         }
+
+        async function setChatUid(){
+            
+            listing_uid=listing.userRef
+            const userRef = collection(db,'users')
+            const q=query(userRef,where('uid','==',listing_uid))
+            const querySnapshot=await getDocs(q)
+            querySnapshot.forEach((doc)=>{
+                listing_uname=doc.data().name
+            })
+            
+            navigate("/chat-home",{state:{id:listing_uname}})
+           
+        }
         if(loading){
             return <Spinner/>
         }
@@ -125,7 +142,7 @@
 
 
                         <button className={`cursor-pointer ${like ? 'text-red-600':'text-slate-400'}`}  onClick={addFavourite}><FaHeart/></button>  
-                        
+                        <button onClick={setChatUid}><BsChatFill className='text-blue-400' /></button>
                         <button onClick={()=>navigate("/image")}><Md360/></button>
 
 
