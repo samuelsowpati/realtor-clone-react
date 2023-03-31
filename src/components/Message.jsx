@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react'
+import Moment from 'react-moment'
 import { AuthContext } from '../context/AuthContext'
 
 export default function Message({message}) {
@@ -17,7 +18,7 @@ export default function Message({message}) {
         
         <div className='messageinfo flex flex-col text-gray-400 font-semibold'>
             <img className='w-10 h-10 object-cover' src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/800px-User_icon_2.svg.png" alt="" />
-        <span>just now</span>
+        <span><Moment fromNow>{message.date?.toDate()}</Moment></span>
         </div>
         <div className='messagecontent items-end max-w-[80%] flex flex-col gap-2.5'>
             <p className='bg-[#8da4f1] pl-2.5 pr-5 rounded-tr-md rounded-br-md rounded-bl-md '>{message.text}</p>
