@@ -97,6 +97,9 @@
             navigate("/chat-home",{state:{id:listing_uname}})
            
         }
+        function windowAlert(){
+            navigate("/transaction")
+        }
         if(loading){
             return <Spinner/>
         }
@@ -169,6 +172,12 @@
                             {+listing.furnished ? 'Furnished' : 'Not furnished'}
                         </li>
                     </ul>
+
+                    <div className='flex items-center '>
+                        <h2 className='font-semibold mr-2'>Buy as NFT!</h2>
+                        <button type="button" onClick={windowAlert} className='w-[100px] h-[40px] mt-1 text-white bg-blue-800 border-none rounded-lg font-semibold cursor-pointer transition duration-150 ease-in-out'> {listing.offer ? listing.discountedPrice*0.0000068 : listing.regularPrice*0.0000068} ETH </button>
+                    </div>
+                    
                     {listing.userRef !== auth.currentUser?.uid && !contactOwner &&
                     (
                         <div className='mt-6'>

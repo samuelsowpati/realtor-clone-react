@@ -17,6 +17,7 @@ import Search from "./pages/Search";
 import Favourite from "./pages/Favourite";
 import ChatHome from "./pages/ChatHome";
 import Image from "./pages/Image";
+import Transaction from "./pages/Transaction";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/profile" element={ <Profile /> }/> 
         </Route>
         <Route path="/sign-in" element={ <SignIn /> }/> 
+        <Route path="/transaction" element={ <Transaction /> }/> 
         <Route path="/image" element={ <Image /> }/> 
         <Route path="/sign-up" element={ <SignUp /> }/> 
         <Route path="/chat-home" element={ <ChatHome /> }/> 
