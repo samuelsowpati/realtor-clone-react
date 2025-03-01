@@ -12,7 +12,7 @@ Integrated a feature where tenants/customers can pay/purchase properties using t
 
 Included a feature to view properties in the 360 degree view using PANOLENS
 
-Used LEAFLET to display 
+Used LEAFLET to display maps depicting the geographical location of the property
 
 Used TailwindCSS to style the layout of the webpage
 
