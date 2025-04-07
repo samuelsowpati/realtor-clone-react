@@ -1,6 +1,9 @@
 PROPERTY MARKETPLACE USING REACT AND FIREBASE
 
 ![image](https://github.com/user-attachments/assets/1ad87d10-7032-4415-a24c-1ae6983ff6d6)
+![image](https://github.com/user-attachments/assets/b1ad3304-40e5-4507-9414-0f07d147be7b)
+![image](https://github.com/user-attachments/assets/a8725176-b463-40f2-92c4-792ec53af004)
+![image](https://github.com/user-attachments/assets/ef2d0b04-42c0-4896-960b-a01f6ed7ae42)
 
 
 React was used for the frontend and FIRESTORE/FIREBASE was used as a database/backend
