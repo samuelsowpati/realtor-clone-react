@@ -1,5 +1,8 @@
 PROPERTY MARKETPLACE USING REACT AND FIREBASE
 
+![image](https://github.com/user-attachments/assets/1ad87d10-7032-4415-a24c-1ae6983ff6d6)
+
+
 React was used for the frontend and FIRESTORE/FIREBASE was used as a database/backend
 
 Queried the FIRESTORE database to fetch property listing according to user inputs(sale/rent, no. of bedrooms, no. of bathrooms, etc.)
